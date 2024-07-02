@@ -67,6 +67,17 @@ router.post("/", async (req, res) => {
     return
   }
 
+  // verifica se o email já está cadastrado
+  const usuarioCadastrado = await prisma.usuario.findFirst({
+    where: { email }
+  })
+
+  if (usuarioCadastrado) {
+    res.status(400).json({ erro: "E-mail já cadastrado" })
+    return
+  }
+
+
   // 12 é o número de voltas (repetições) que o algoritmo faz
   // para gerar o salt (sal/tempero)
   const salt = bcrypt.genSaltSync(12)
