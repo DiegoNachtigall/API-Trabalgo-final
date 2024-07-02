@@ -9,6 +9,7 @@ url_login = "http://localhost:3000/login"
 
 
 def titulo(texto, sublinhado="-"):
+  
   print()
   print(texto)
   print(sublinhado*40)
