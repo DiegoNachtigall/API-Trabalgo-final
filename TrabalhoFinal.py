@@ -2,9 +2,9 @@ import requests
 import matplotlib.pyplot as plt
 import numpy as np
 
-url_jogos = "http://localhost:3000/jogos"
-url_usuarios = "http://localhost:3000/usuarios"
-url_log = "http://localhost:3000/log"
+url_jogos = "https://api-trabalho-final.vercel.app/jogos"
+url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
+# url_log = "https://api-trabalho-final.vercel.app/log"
 
 def titulo(texto, sublinhado="-"):
   print()
