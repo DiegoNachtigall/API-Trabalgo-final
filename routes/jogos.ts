@@ -74,17 +74,17 @@ router.delete("/:id", verificaToken, async (req, res) => {
 
 router.put("/:id", verificaToken, async (req, res) => {
   const { id } = req.params;
-  const { nome, descricao, preco, genero } = req.body;
+  const { preco } = req.body;
 
-  if (!nome || !descricao || !preco || !genero) {
-    res.status(400).json({ erro: "Informe nome, raca, idade e custo_mensal" });
+  if (!preco) {
+    res.status(400).json({ erro: "Informe o preço" });
     return;
   }
 
   try {
     const jogos = await prisma.jogo.update({
       where: { id: Number(id) },
-      data: { nome, descricao, preco, genero },
+      data: { preco },
     });
     res.status(200).json(jogos);
   } catch (error) {
