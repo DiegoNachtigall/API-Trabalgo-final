@@ -12,13 +12,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
+// The Last of Us é uma franquia de jogos eletrônicos de ação-aventura
 // - Model associada a tabela principal do sistema (contendo: id, nome / descrição, ..., usuário_id). Implementar o recurso de exclusão lógica (soft delete)
 
 model Jogo {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(60)
-  descricao String   @db.VarChar(40)
+  descricao String   @db.VarChar(400)
   preco     Float
   genero    Generos
   createdAt DateTime @default(now())

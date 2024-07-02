@@ -34,10 +34,6 @@ router.get("/", async (req: any, res) => {
       where: { deleted: false },
     });
     res.status(200).json(jogos);
-
-    const { userLogadoId } = req;
-
-    console.log(userLogadoId);
   
 });
 
@@ -46,8 +42,6 @@ router.post("/", verificaToken, async (req: any, res) => {
   const { nome, descricao, preco, genero } = req.body;
 
   const { userLogadoId } = req;
-
-  console.log(userLogadoId);
 
   if (!nome || !descricao || !preco || !genero) {
     res.status(400).json({ erro: "Informe todos os dados" });
