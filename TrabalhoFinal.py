@@ -7,7 +7,7 @@ url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
 url_login = "http://localhost:3000/login"
 # url_log = "https://api-trabalho-final.vercel.app/log"
 
-
+# --------------------------------------------- Função de login
 def titulo(texto, sublinhado="-"):
   
   print()
@@ -34,6 +34,8 @@ else:
   
   exit()
 
+
+# --------------------------------------------- Funções de CRUD
 def incluir():
   titulo("Inclusão de Jogos")
   
@@ -75,6 +77,7 @@ def listar():
     print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
 
 
+
 def alterar():
   listar()  
   
@@ -108,6 +111,7 @@ def alterar():
   else:
     print("Erro... Não foi possível realizar a alteração")
 
+
 def excluir():
   listar()  
   
@@ -140,6 +144,8 @@ def excluir():
     else:
       print("Erro... Não foi possível excluir este jogo")
 
+
+# --------------------------------------------- Funções de Busca
 def preco():
   titulo("Busca por Faixa de Preço")
 
@@ -158,9 +164,7 @@ def preco():
       print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
 
 
-
-
-
+# --------------------------------------------- Funções de Gráfico
 def grafico():
   titulo("Gráfico Relacionando Gêneros dos Jogos")
 
@@ -179,6 +183,31 @@ def grafico():
 
   plt.show()
 
+
+# --------------------------------------------- Funções de Descrição
+def descricao():
+  listar()  
+  
+  titulo("Descrição do Jogo")
+
+  nome = int(input("Digite o número do jogo a qual deseja visualizar sua descrição:  "))
+
+  # obtém os dados da API (para verificar se existe e os dados)
+  response = requests.get(url_jogos)  
+  jogos = response.json()
+
+  jogo = [x for x in jogos if x['id'] == id]
+
+  if len(jogo) == 0:
+    print("Erro... Código de Jogo Inválido")
+    return
+
+  print("Cód. Título do Jogo..............: Descrição:")
+  print("="*45)
+  for jogo in jogos:
+    print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['descricao']:12s}")
+    
+
 # --------------------------------------------- Programa Principal
 while True:
   titulo("Cadastro de Jogos - Uso de API")
@@ -188,7 +217,8 @@ while True:
   print("4. Exclusão de Jogos")
   print("5. Busca por faixa de preço")
   print("6. Gráfico Comparando Gêneros")
-  print("7. Finalizar")
+  print("7. Visualizar Descrição do jogo")
+  print("8. Finalizar")
   opcao = int(input("Opção: "))
   if opcao == 1:
     incluir()
@@ -202,6 +232,8 @@ while True:
     preco()
   elif opcao == 6:
     grafico()
+  elif opcao == 7:
+    descricao()
   else:
     print("="*16)
     print("Volte sempre! :)")
