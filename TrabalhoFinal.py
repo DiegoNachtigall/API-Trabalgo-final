@@ -191,7 +191,7 @@ def descricao():
   
   titulo("Descrição do Jogo")
 
-  nome = int(input("Digite o número do jogo a qual deseja visualizar sua descrição:  "))
+  id = int(input("Digite o número do jogo a qual deseja visualizar sua descrição:  "))
 
   # obtém os dados da API (para verificar se existe e os dados)
   response = requests.get(url_jogos)  
@@ -204,9 +204,8 @@ def descricao():
     return
 
   print("Cód. Título do Jogo..............: Descrição:")
-  print("="*45)
-  for jogo in jogos:
-    print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['descricao']:12s}")
+  print("="*23)
+  print(f"{jogo[0]['descricao']:12s}")
     
 
 # --------------------------------------------- Programa Principal
