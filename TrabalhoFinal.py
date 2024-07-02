@@ -203,5 +203,7 @@ while True:
   elif opcao == 6:
     grafico()
   else:
+    print("="*16)
+    print("Volte sempre! :)")
     break  
 
