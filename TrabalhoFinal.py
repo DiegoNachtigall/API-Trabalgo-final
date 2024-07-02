@@ -125,7 +125,7 @@ def excluir():
     print("Erro... Código de Jogo Inválido")
     return
 
-  print(f"Título do Jogo: {jogo[0]['titulo']}")
+  print(f"Título do Jogo:  {jogo[0]['nome']}")
   print(f"Gênero.........: {jogo[0]['genero']}") 
   print(f"Preço R$.......: {jogo[0]['preco']:9.2f}")
   print()
