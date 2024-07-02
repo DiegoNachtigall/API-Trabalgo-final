@@ -13,7 +13,7 @@ app.use("/Jogos", JogosRoutes)
 app.use("/Login", LoginRoutes)
 
 app.get('/', (req, res) => {
-  res.send('API de ')
+  res.send('API de Dados de jogos')
 })
 
 app.listen(port, () => {
