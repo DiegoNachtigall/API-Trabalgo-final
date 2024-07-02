@@ -18,7 +18,7 @@ def incluir():
   genero  = input("Gênero.........: ") 
   preco   = float(input("Preço R$.......: "))
 
-  response = requests.post(url, 
+  response = requests.post(url_jogos, 
                            json={"titulo": nome, 
                                  "genero": genero, 
                                  "preco": preco})
@@ -35,7 +35,7 @@ def listar():
   print("Cód. Título do Jogo..............: Gênero.....: Duração Preço R$:")
   print("==================================================================")
 
-  response = requests.get(url)
+  response = requests.get(url_jogos)
 
   if response.status_code != 200:
     print("Erro... Não foi possível obter dados da API")
@@ -44,7 +44,7 @@ def listar():
   jogos = response.json()
 
   for jogo in jogos:
-    print(f"{jogo['id']:4d} {jogo['titulo']:30s} {jogo['genero']:12s} {jogo['duracao']:4d}min {jogo['preco']:9.2f}")
+    print(f"{jogo['id']:4d} {jogo['titulo']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
 
 
 def alterar():
@@ -55,7 +55,7 @@ def alterar():
   id = int(input("Código do Jogo: "))
 
   # obtém os dados da API (para verificar se existe e os dados)
-  response = requests.get(url)  
+  response = requests.get(url_jogos)  
   jogos = response.json()
 
   jogo = [x for x in jogos if x['id'] == id]
@@ -71,7 +71,7 @@ def alterar():
 
   novo_preco = float(input("Novo Preço R$: "))
 
-  response = requests.put(url+"/"+str(id), 
+  response = requests.put(url_jogos+"/"+str(id), 
                           json={"preco": novo_preco})
   
   if response.status_code == 200:
@@ -88,8 +88,8 @@ def excluir():
   id = int(input("Código do Jogo: "))
 
   # obtém os dados da API (para verificar se existe e os dados)
-  response = requests.get(url)  
-  jogo = response.json()
+  response = requests.get(url_jogos)  
+  jogos = response.json()
 
   jogo = [x for x in jogos if x['id'] == id]
 
@@ -99,14 +99,13 @@ def excluir():
 
   print(f"Título do Jogo: {jogo[0]['titulo']}")
   print(f"Gênero.........: {jogo[0]['genero']}") 
-  print(f"Duração........: {jogo[0]['duracao']}")
   print(f"Preço R$.......: {jogo[0]['preco']:9.2f}")
   print()
 
   confirma = input("Confirma a Exclusão deste Jogo(S/N)? ").upper()
 
   if confirma == "S":
-    response = requests.delete(url+"/"+str(id))
+    response = requests.delete(url_jogos+"/"+str(id))
   
     if response.status_code == 200:
       print("Ok! Jogo Excluído com sucesso")
@@ -116,7 +115,7 @@ def excluir():
 def grafico():
   titulo("Gráfico Relacionando Gêneros dos Jogos")
 
-  response = requests.get(url)
+  response = requests.get(url_jogos)
   jogos = response.json()
 
   labels = list(set([x['genero'] for x in jogos]))
