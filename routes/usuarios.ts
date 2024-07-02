@@ -84,4 +84,18 @@ router.post("/", async (req, res) => {
   }
 })
 
+router.put("/desbloquear/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const usuario = await prisma.usuario.update({
+      where: { id: Number(id) },
+      data: { blocked: false, tentativasLogin: 0 }
+    })
+    res.status(200).json(usuario)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
 export default router

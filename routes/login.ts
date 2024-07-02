@@ -52,6 +52,20 @@ router.post("/", async (req, res) => {
         email: usuario.email,
         token
       });
+
+      await prisma.$transaction([
+        prisma.log.create({
+          data: {
+            descricao: `Acesso efetuado com sucesso`,
+            complemento: `Usuário: ${usuario.email}`,
+            usuarioId: usuario.id,
+          }
+        }),
+        prisma.usuario.update({
+          where: { id: usuario.id },
+          data: { tentativasLogin: {set: 0}}
+        }),
+      ]);
     } else {
       // res.status(400).json({ erro: "Senha incorreta" })
 
