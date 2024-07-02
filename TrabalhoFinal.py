@@ -32,7 +32,7 @@ if response.status_code == 200:
   print(f"Token: {token}")
   
 else:
-  print("Erro... Usuário ou senha inválidos")
+  print(response.json())
   
   exit()
 
@@ -142,6 +142,13 @@ def excluir():
     else:
       print("Erro... Não foi possível excluir este jogo")
 
+def preco():
+  titulo("Busca por Faixa de Preço")
+
+  preco_min = float(input("Preço Mínimo R$: "))
+  preco_max = float(input("Preço Máximo R$: "))
+
+
 def grafico():
   titulo("Gráfico Relacionando Gêneros dos Jogos")
 
@@ -167,8 +174,9 @@ while True:
   print("2. Listagem de Jogos")
   print("3. Alteração de Jogos")
   print("4. Exclusão de Jogos")
-  print("5. Gráfico Comparando Gêneros")
-  print("6. Finalizar")
+  print("5. Busca por faixa de preço")
+  print("6. Gráfico Comparando Gêneros")
+  print("7. Finalizar")
   opcao = int(input("Opção: "))
   if opcao == 1:
     incluir()
@@ -179,6 +187,8 @@ while True:
   elif opcao == 4:
     excluir()
   elif opcao == 5:
+    preco()
+  elif opcao == 6:
     grafico()
   else:
     break  
