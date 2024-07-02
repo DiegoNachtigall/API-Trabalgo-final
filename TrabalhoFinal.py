@@ -2,26 +2,55 @@ import requests
 import matplotlib.pyplot as plt
 import numpy as np
 
-url_jogos = "https://api-trabalho-final.vercel.app/jogos"
+url_jogos = "http://localhost:3000/jogos"
 url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
+url_login = "http://localhost:3000/login"
 # url_log = "https://api-trabalho-final.vercel.app/log"
+
 
 def titulo(texto, sublinhado="-"):
   print()
   print(texto)
   print(sublinhado*40)
 
+titulo("Login do Usuário")
+
+email = input("E-mail: ")
+senha = input("Senha: ")
+
+response = requests.post(url_login, 
+                          json={"email": email, 
+                                "senha": senha}
+                        )
+  
+if response.status_code == 200:
+  usuario = response.json()
+  print(f"Bem Vinde {usuario['nome']}!")
+  token = usuario['token']
+  
+  print(f"Token: {token}")
+  
+else:
+  print("Erro... Usuário ou senha inválidos")
+  
+  exit()
+
 def incluir():
   titulo("Inclusão de Jogos")
-
+  
   nome    = input("Título do Jogo: ")
+  descricao  = input("Descrição.........: ") 
   genero  = input("Gênero.........: ") 
   preco   = float(input("Preço R$.......: "))
 
   response = requests.post(url_jogos, 
-                           json={"titulo": nome, 
+                           json={"nome": nome, 
+                                 "descricao": descricao,
                                  "genero": genero, 
-                                 "preco": preco})
+                                 "preco": preco
+                                 },
+                           headers={"authorization": token}
+                          )
   
   if response.status_code == 201:
     jogo = response.json()
@@ -32,7 +61,7 @@ def incluir():
 def listar():
   titulo("Lista dos Jogos Cadastrados")
 
-  print("Cód. Título do Jogo..............: Gênero.....: Duração Preço R$:")
+  print("Cód. Título do Jogo..............: Gênero.....:  Preço R$:")
   print("==================================================================")
 
   response = requests.get(url_jogos)
@@ -44,7 +73,7 @@ def listar():
   jogos = response.json()
 
   for jogo in jogos:
-    print(f"{jogo['id']:4d} {jogo['titulo']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
+    print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
 
 
 def alterar():
