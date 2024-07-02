@@ -63,7 +63,7 @@ def listar():
   titulo("Lista dos Jogos Cadastrados")
 
   print("Cód. Título do Jogo..............: Gênero.....:  Preço R$:")
-  print("==================================================================")
+  print("="*58)
 
   response = requests.get(url_jogos)
 
@@ -74,7 +74,10 @@ def listar():
   jogos = response.json()
 
   for jogo in jogos:
-    print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
+    if jogo["preco"] == 0.1:
+      print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:13s} Gratuíto")
+    else:
+      print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
 
 
 
