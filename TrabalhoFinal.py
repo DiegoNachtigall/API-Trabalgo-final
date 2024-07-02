@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 url_jogos = "http://localhost:3000/jogos"
+# url_jogos = "https://api-trabalho-final.vercel.app/jogos"
+# url_usuarios = "http://localhost:3000/usuarios"
 url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
 url_login = "http://localhost:3000/login"
-# url_log = "https://api-trabalho-final.vercel.app/log"
+# url_login = "https://api-trabalho-final.vercel.app/login"
+
 
 # --------------------------------------------- Função de login
 def titulo(texto, sublinhado="-"):
@@ -206,7 +209,7 @@ def descricao():
     print("Erro... Código de Jogo Inválido")
     return
 
-  print("Cód. Título do Jogo..............: Descrição:")
+  print(f"Descrição de {jogo[0]['nome']}:")
   print("="*23)
   print(f"{jogo[0]['descricao']:12s}")
     
