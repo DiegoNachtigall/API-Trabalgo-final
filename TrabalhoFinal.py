@@ -96,11 +96,13 @@ def alterar():
   print(f"Gênero.........: {jogo[0]['genero']}") 
   print(f"Preço R$.......: {jogo[0]['preco']:9.2f}")
   print()
+  print(url_jogos+"/"+str(id))
 
   novo_preco = float(input("Novo Preço R$: "))
 
   response = requests.put(url_jogos+"/"+str(id), 
-                          json={"preco": novo_preco})
+                          json={"preco": novo_preco},
+                          headers={"authorization": token})
   
   if response.status_code == 200:
     jogo = response.json()
@@ -133,7 +135,8 @@ def excluir():
   confirma = input("Confirma a Exclusão deste Jogo(S/N)? ").upper()
 
   if confirma == "S":
-    response = requests.delete(url_jogos+"/"+str(id))
+    response = requests.delete(url_jogos+"/"+str(id),
+                               headers={"authorization": token})
   
     if response.status_code == 200:
       print("Ok! Jogo Excluído com sucesso")
@@ -156,9 +159,6 @@ def preco():
   for jogo in jogos:
     if preco_min <= jogo['preco'] <= preco_max:
       print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
-
-
-
 
 
 def grafico():
