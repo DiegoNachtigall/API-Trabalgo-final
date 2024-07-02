@@ -172,7 +172,7 @@ while True:
   titulo("Cadastro de Jogos - Uso de API")
   print("1. Inclusão de Jogos")
   print("2. Listagem de Jogos")
-  print("3. Alteração de Jogos")
+  print("3. Alteração de preço Jogos")
   print("4. Exclusão de Jogos")
   print("5. Busca por faixa de preço")
   print("6. Gráfico Comparando Gêneros")
