@@ -1,0 +1,19 @@
+meta {
+  name: user p
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/usuarios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Diego",
+    "email": "email",
+    "senha": "Senhaa1!"
+  }
+}

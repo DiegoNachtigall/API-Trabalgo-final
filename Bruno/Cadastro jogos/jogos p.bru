@@ -1,0 +1,24 @@
+meta {
+  name: jogos p
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/jogos
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTG9nYWRvSWQiOjEsInVzZXJMb2dhZG9Ob21lIjoiRGllZ28iLCJpYXQiOjE3MTk4Nzc1ODIsImV4cCI6MTcxOTg4MTE4Mn0.GNeft62OkM9XWz13GFeYaVHMwmQJkz5gu6KLeGH_CZA
+}
+
+body:json {
+  {
+    "nome": "The Last of Us",
+    "descricao": "The Last of Us é uma franquia de jogos eletrônicos de ação-aventura e survival horror exclusiva da PlayStation, criada por Neil Druckmann.",
+    "preco": 169.99,
+    "genero": "Acao"
+  }
+}
