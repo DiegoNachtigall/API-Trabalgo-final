@@ -27,9 +27,7 @@ response = requests.post(url_login,
 if response.status_code == 200:
   usuario = response.json()
   print(f"Bem Vinde {usuario['nome']}!")
-  token = usuario['token']
-  
-  print(f"Token: {token}")
+  token = usuario['token']  
   
 else:
   print(response.json())
@@ -147,6 +145,20 @@ def preco():
 
   preco_min = float(input("Preço Mínimo R$: "))
   preco_max = float(input("Preço Máximo R$: "))
+
+  response = requests.get(url_jogos)
+  jogos = response.json()
+
+  print("="*58)
+  print("Cód. Título do Jogo..............: Gênero.....:  Preço R$:")
+  print("="*58)
+
+  for jogo in jogos:
+    if preco_min <= jogo['preco'] <= preco_max:
+      print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
+
+
+
 
 
 def grafico():

@@ -5,3 +5,5 @@ alterar o port no index.ts
 
 apos alterar schema
 npx prisma migrate dev --name nome_da_migração
+
+adicionar um .env caso for clonar do github:::
