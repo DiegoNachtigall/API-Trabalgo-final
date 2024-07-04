@@ -95,6 +95,7 @@ router.post("/", async (req, res) => {
   }
 })
 
+// Efetua o Desbloqueio de um Usuário
 router.put("/desbloquear/:id", async (req, res) => {
   const { id } = req.params
 
@@ -109,4 +110,48 @@ router.put("/desbloquear/:id", async (req, res) => {
   }
 })
 
+// Efetua a mudança de senha de um usuário
+router.put("/mudarsenha/:id", async (req, res) => {
+  const { id } = req.params
+  const { senhaAntiga, senhaNova } = req.body
+
+  if (!senhaAntiga || !senhaNova) {
+    res.status(400).json({ erro: "Informe a senha antiga e a nova senha" })
+    return
+  }
+
+  const usuario = await prisma.usuario.findFirst({
+    where: { id: Number(id) }
+  })
+
+  if (!usuario) {
+    res.status(400).json({ erro: "Usuário não encontrado" })
+    return
+  }
+
+  if (!bcrypt.compareSync(senhaAntiga, usuario.senha)) {
+    res.status(400).json({ erro: "Senha antiga inválida" })
+    return
+  }
+
+  const erros = validaSenha(senhaNova)
+
+  if (erros.length > 0) {
+    res.status(400).json({ erro: erros.join("; ") })
+    return
+  }
+
+  const hash = bcrypt.hashSync(senhaNova, 12)
+
+  try {
+    const usuario = await prisma.usuario.update({
+      where: { id: Number(id) },
+      data: { senha: hash }
+    })
+    res.status(200).json(usuario)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+
+})
 export default router

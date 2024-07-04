@@ -4,40 +4,68 @@ import numpy as np
 
 url_jogos = "http://localhost:3000/jogos"
 # url_jogos = "https://api-trabalho-final.vercel.app/jogos"
-# url_usuarios = "http://localhost:3000/usuarios"
-url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
+url_usuarios = "http://localhost:3000/usuarios"
+# url_usuarios = "https://api-trabalho-final.vercel.app/usuarios"
 url_login = "http://localhost:3000/login"
 # url_login = "https://api-trabalho-final.vercel.app/login"
 
 
-# --------------------------------------------- Função de login
+# --------------------------------------------- Função de Título
 def titulo(texto, sublinhado="-"):
   
   print()
   print(texto)
   print(sublinhado*40)
 
-titulo("Login do Usuário")
+# Função para pausar a execução do programa
+def continuar():
+  input("Pressione ENTER para continuar...")
 
-email = input("E-mail: ")
-senha = input("Senha: ")
+# Função para realizar o login do usuário
 
-response = requests.post(url_login, 
-                          json={"email": email, 
-                                "senha": senha}
-                        )
-  
-if response.status_code == 200:
-  usuario = response.json()
-  print(f"Bem Vinde {usuario['nome']}!")
-  token = usuario['token']  
-  
-else:
-  print(response.json())
-  
-  exit()
+def login():
+  titulo("Login do Usuário")
+
+  email = input("E-mail: ")
+  senha = input("Senha: ")
+
+  response = requests.post(url_login, 
+                            json={"email": email, 
+                                  "senha": senha}
+                          )
+    
+  if response.status_code == 200:
+    usuario = response.json()
+    print(f"Bem Vinde {usuario['nome']}!")
+    return usuario['token']  
+    
+  else:
+    print('-'*18+"Erro"+'-'*18)
+    print(response.json()['erro'])
+    print('-'*40)
 
 
+# Função para realizar o cadastro do usuário
+def cadastro():
+  titulo("Cadastro de Usuário")
+
+  nome = input("Nome: ")
+  email = input("E-mail: ")
+  senha = input("Senha: ")
+
+  response = requests.post(url_usuarios, 
+                            json={"nome": nome, 
+                                  "email": email, 
+                                  "senha": senha}
+                          )
+    
+  if response.status_code == 201:
+    print("Ok! Usuário cadastrado com sucesso")
+  else:
+    print('-'*18+"Erro"+'-'*18)
+    print(response.json()['erro'])
+    print('-'*40)
+    continuar()
 # --------------------------------------------- Funções de CRUD
 def incluir():
   titulo("Inclusão de Jogos")
@@ -214,7 +242,83 @@ def descricao():
   print(f"{jogo[0]['descricao']:12s}")
     
 
-# --------------------------------------------- Programa Principal
+def AlterarSenha():
+  titulo("Alterar Senha")
+  print("Digite seu e-mail e senha para continuar")
+  email = input("E-mail: ")
+  senha = input("Senha: ")
+  
+  response = requests.post(url_login, 
+                            json={"email": email, 
+                                  "senha": senha}
+                          )
+  
+  if response.status_code == 200:
+    usuario = response.json()
+    id = usuario['id']
+    
+    nova_senha = input("Digite sua nova senha: ")
+    confirmar_senha = input("Confirme sua nova senha: ")
+    
+    if nova_senha == confirmar_senha:
+      response = requests.put(url_usuarios+"/mudarsenha/"+str(id), 
+                              json={"senhaAntiga": senha,
+                                    "senhaNova": nova_senha},
+                              headers={"authorization": token})
+      if response.status_code == 200:
+        print("Senha alterada com sucesso!")
+        continuar()
+      else:
+        print(response.json()['erro'])
+        continuar()
+    else:
+      print("Erro... As senhas não batem")
+      continuar()
+  else:
+    print("Erro... Não foi possível alterar a senha")
+    continuar()
+
+# Loop para realizar o login ou cadastro do usuário
+token = None
+
+while token is None:
+  titulo("Bem Vindo ao Cadastro de Jogos - Uso de API")
+  print("1. Login")
+  print("2. Cadastro")
+  print("3. Sair")
+  opcao = int(input("Opção: "))
+  if opcao == 1:
+    token = login()
+    if token == None:
+      print("Erro ao realizar o login, tente novamente ou entre em contato com o suporte.")
+      continuar()
+  elif opcao == 2:
+    cadastro()
+  else:
+    print("="*16)
+    print("Volte sempre! :)")
+    exit()
+    
+# --------------------------------------------
+
+def configuracoes():
+  while True:
+    titulo("Configurações de Conta")
+    print("1. Alterar senha")
+    print("0. Voltar")
+    
+    opcao = int(input("Opção: "))
+    
+    if opcao == 1:
+      AlterarSenha()
+      break
+    else:
+      print("="*16)
+      print("Volte sempre! :)")
+      break
+    
+    
+# Loop Principal
 while True:
   titulo("Cadastro de Jogos - Uso de API")
   print("1. Inclusão de Jogos")
@@ -224,7 +328,8 @@ while True:
   print("5. Busca por faixa de preço")
   print("6. Gráfico Comparando Gêneros")
   print("7. Visualizar Descrição do jogo")
-  print("8. Finalizar")
+  print("8. Configurações de Conta")
+  print("0. Finalizar")
   opcao = int(input("Opção: "))
   if opcao == 1:
     incluir()
@@ -240,6 +345,8 @@ while True:
     grafico()
   elif opcao == 7:
     descricao()
+  elif opcao == 8:
+    configuracoes()
   else:
     print("="*16)
     print("Volte sempre! :)")

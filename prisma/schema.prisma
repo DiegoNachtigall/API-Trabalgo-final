@@ -21,9 +21,10 @@ model Jogo {
   descricao String   @db.VarChar(400)
   preco     Float
   genero    Generos
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt
   usuarioId Int
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id])
   deleted   Boolean  @default(false)
   @@map("jogos")
 }
@@ -52,6 +53,7 @@ model Usuario {
   tentativasLogin Int @default(0)
   blocked Boolean @default(false)
   logs  Log[]
+  jogos Jogo[]
   @@map("usuarios")
 }
 
