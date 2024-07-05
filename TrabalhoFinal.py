@@ -103,6 +103,7 @@ def listar():
     return
   
   jogos = response.json()
+  jogos = sorted(jogos, key=lambda x: x['id'])
 
   for jogo in jogos:
     if jogo["preco"] == 0.1:
