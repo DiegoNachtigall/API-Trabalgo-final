@@ -200,6 +200,9 @@ def preco():
   for jogo in jogos:
     if preco_min <= jogo['preco'] <= preco_max:
       print(f"{jogo['id']:4d} {jogo['nome']:30s} {jogo['genero']:12s} {jogo['preco']:9.2f}")
+      
+
+# --------------------------------------------- Gráfico de Gêneros usando Matplotlib e Numpy 
 
 def grafico():
   titulo("Gráfico Relacionando Gêneros dos Jogos")
@@ -242,6 +245,8 @@ def descricao():
   print("="*23)
   print(f"{jogo[0]['descricao']:12s}")
     
+
+# --------------------------------------------- Função de segurança para alterar senha do usuário (já logado)
 
 def AlterarSenha():
   titulo("Alterar Senha")
@@ -300,7 +305,8 @@ while token is None:
     print("Volte sempre! :)")
     exit()
     
-# --------------------------------------------
+
+# -------------------------------------------- Menu Principal inicial
 
 def configuracoes():
   while True:

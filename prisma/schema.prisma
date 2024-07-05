@@ -29,6 +29,8 @@ model Jogo {
   @@map("jogos")
 }
 
+// - Enumerador de gêneros da model jogos
+
 enum Generos {
   Acao
   Puzzle
@@ -57,6 +59,7 @@ model Usuario {
   @@map("usuarios")
 }
 
+//Model de login para armazenar os logs de login
 model Log {
   id          Int      @id @default(autoincrement())
   descricao   String   @db.VarChar(60)
