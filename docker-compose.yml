@@ -13,7 +13,4 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV = development
-      - DATABASE_URL = postgresql://neondb_owner:9KIGE3bQNBVs@ep-odd-sound-a5hfaald.us-east-2.aws.neon.tech/Jogos?sslmode=require
-      - JWT_KEY = ChaveSecretaP4R4T0ken872387jsfk34esnmgdhkj*#@jfkM
     command: npm run dev
-    
