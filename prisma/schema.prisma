@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 // The Last of Us é uma franquia de jogos eletrônicos de ação-aventura
@@ -21,7 +21,7 @@ model Jogo {
   descricao String   @db.VarChar(400)
   preco     Float
   genero    Generos
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   usuarioId Int
   usuario  Usuario  @relation(fields: [usuarioId], references: [id])

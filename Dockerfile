@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm install @prisma/client
 
 EXPOSE 3000
 
